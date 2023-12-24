@@ -17,14 +17,15 @@ const hbs = exphbs.create({});
 const sess = {
   secret: 'Super secret secret',
   cookie: {
- // Maximum age of the session cookie in milliseconds (1 hour in this case)
- maxAge: 60 * 60 * 1000,
- // Restricts the access to the session cookie only through HTTP(S)
- httpOnly: true,
- // Indicates whether the cookie should only be sent over HTTPS (secure connection)
- secure: false,
- // This helps mitigate the risk of cross-site request forgery (CSRF) attacks
- sameSite: 'strict',  },
+    // Maximum age of the session cookie in milliseconds (1 hour in this case)
+    maxAge: 60 * 60 * 1000,
+    // Restricts the access to the session cookie only through HTTP(S)
+    httpOnly: true,
+    // Indicates whether the cookie should only be sent over HTTPS (secure connection)
+    secure: false,
+    // This helps mitigate the risk of cross-site request forgery (CSRF) attacks
+    sameSite: 'strict',
+  },
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
