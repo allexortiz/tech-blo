@@ -19,6 +19,10 @@ router.get('/', async (req, res) => {
     // Map the blog data to plain JavaScript objects
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
+    // Log some information for debugging
+    console.log('Received request to /');
+    console.log('Number of blogs fetched:', blogs.length);
+
     // Render the homepage template with blogs and session information
     res.render('homepage', {
       blogs,
@@ -26,6 +30,9 @@ router.get('/', async (req, res) => {
     });
 
   } catch (err) {
+    // Log error for debugging
+    console.error('Error in / route:', err);
+
     // Handle errors by sending a 500 Internal Server Error response
     res.status(500).json(err);
   }
