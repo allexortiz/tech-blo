@@ -3,7 +3,7 @@ const { Post } = require('../models');
 const postData = [
     {
         title: "Why MVC is so important",
-        content: "MVC allows developer to maintain a true seperation of converns, devising their code between the Model layer for data, the View layer for design, and the Controller layer for application logic.",
+        content: "MVC allows developers to maintain a true separation of concerns, dividing their code between the Model layer for data, the View layer for design, and the Controller layer for application logic.",
         user_id: 1
     },
     {
@@ -19,6 +19,19 @@ const postData = [
     }
 ]
 
-const seedPosts = () => Post.bulkCreate(postData);
+const seedPosts = async () => {
+    try {
+        await Post.bulkCreate(postData);
+        console.log('Posts seeded successfully');
+    } catch (err) {
+        console.error('Error seeding posts:', err);
+    }
+};
+
+// Call the function in an async context
+(async () => {
+    await seedPosts();
+    // Any other asynchronous operations or exit the script
+})();
 
 module.exports = seedPosts;

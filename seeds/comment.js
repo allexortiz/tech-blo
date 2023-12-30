@@ -51,6 +51,10 @@ const commentData = [
     }
 ];
 
-const seedComments = () => Comment.bulkCreate(commentData);
+const seedComments = () => {
+    return Comment.bulkCreate(commentData)
+        .then(() => console.log('Comments seeded successfully'))
+        .catch((err) => console.error('Error seeding comments:', err));
+};
 
 module.exports = seedComments;
