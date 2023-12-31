@@ -1,13 +1,13 @@
 // Importing the Express Router and required models and middleware
 const router = require('express').Router();
-const { Blog, User } = require('../models');
+const { Post, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 // Route to render the homepage with a list of blogs
 router.get('/', async (req, res) => {
   try {
     // Fetch all blogs with associated user data
-    const blogData = await Blog.findAll({
+    const postData = await Post.findAll({
       include: [
         {
           model: User,
@@ -17,11 +17,11 @@ router.get('/', async (req, res) => {
     });
 
     // Map the blog data to plain JavaScript objects
-    const blogs = blogData.map((blog) => blog.get({ plain: true }));
+    const post = postData.map((post) => post.get({ plain: true }));
 
     // Render the homepage template with blogs and session information
     res.render('homepage', {
-      blogs,
+      post,
       logged_in: req.session.logged_in
     });
 
@@ -32,24 +32,24 @@ router.get('/', async (req, res) => {
 });
 
 // Route to render a specific blog post by ID
-router.get('/blog/:id', async (req, res) => {
+router.get('/post/:id', async (req, res) => {
   try {
     // Fetch a specific blog post with associated user data
-    const blogData = await Blog.findByPk(req.params.id, {
+    const postData = await Post.findByPk(req.params.id, {
       include: [
         {
           model: User,
-          attributes: ['name'],
+          attributes: ['username'],
         },
       ],
     });
 
     // Get the plain JavaScript object representing the blog post
-    const blog = blogData.get({ plain: true });
+    const post = postData.get({ plain: true });
 
     // Render the blog template with blog details and session information
-    res.render('blog', {
-      ...blog,
+    res.render('post', {
+      ...post,
       logged_in: req.session.logged_in
     });
   } catch (err) {
@@ -64,7 +64,7 @@ router.get('/profile', withAuth, async (req, res) => {
     // Fetch user data, excluding the password, and including associated projects
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Project }],
+      include: [{ model: Post }],
     });
 
     // Get the plain JavaScript object representing the user
