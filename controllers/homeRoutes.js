@@ -17,11 +17,11 @@ router.get('/', async (req, res) => {
     });
 
     // Map the blog data to plain JavaScript objects
-    const post = postData.map((post) => post.get({ plain: true }));
+    const posts = postData.map((post) => post.get({ plain: true }));
 
     // Render the homepage template with blogs and session information
     res.render('homepage', {
-      post,
+      posts, // Pass the posts data to the template
       logged_in: req.session.logged_in
     });
 
