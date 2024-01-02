@@ -19,6 +19,7 @@ const newFormHandler = async (event) => {
 
     // If successful, redirect the browser to the profile page
     if (response.ok) {
+      console.log('Blog post created successfully!');
       document.location.replace('/profile');
     } else {
       // Display an alert with a failure message
@@ -50,5 +51,5 @@ const delButtonHandler = async (event) => {
 };
 
 // Adding event listeners to the form submission and delete button click
-document.querySelector('.new-blog-form').addEventListener('submit', newFormHandler);
-document.querySelector('.blog-list').addEventListener('click', delButtonHandler);
+  document.querySelector('.new-blog-form').addEventListener('submit', newFormHandler);
+  document.querySelector('.blog-list').addEventListener('click', delButtonHandler);
