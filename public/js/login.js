@@ -37,9 +37,11 @@ const signupFormHandler = async (event) => {
     });
 
     if (response.ok) {
+      // Redirect to the profile page upon successful user creation
       document.location.replace('/profile');
     } else {
-      alert(response.statusText);
+      // Handle other response statuses (e.g., display an error message)
+      alert(`Error: ${response.statusText}`);
     }
   }
 };

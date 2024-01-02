@@ -4,7 +4,6 @@ const { User } = require('../../models');
 // Route for creating a new user
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body);
     // Create a new user using the provided data in the request body
     const userData = await User.create(req.body);
 
@@ -13,8 +12,8 @@ router.post('/', async (req, res) => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
 
-      // Respond with the user data
-      res.status(200).json(userData);
+      // Respond with a redirect to the profile page
+      res.redirect('/profile');
     });
   } catch (err) {
     // Handle errors and respond with a 400 status code
