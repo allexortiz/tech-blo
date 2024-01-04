@@ -9,14 +9,15 @@ const newFormHandler = async (event) => {
   // Check if name and description are provided
   if (name && description) {
     // Send a POST request to the blogs API endpoint
-    const response = await fetch(`/api/blogs`, {
+    const response = await fetch(`/api/posts`, {
       method: 'POST',
-      body: JSON.stringify({ name, description }),
+      body: JSON.stringify({ title: name, description }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
-
+    const result = await response.json();
+    console.log(result);
     // If successful, redirect the browser to the profile page
     if (response.ok) {
       console.log('Blog post created successfully!');
@@ -36,10 +37,11 @@ const delButtonHandler = async (event) => {
     const id = event.target.getAttribute('data-id');
 
     // Send a DELETE request to the blogs API endpoint with the specified id
-    const response = await fetch(`/api/blogs/${id}`, {
+    const response = await fetch(`/api/posts/${id}`, {
       method: 'DELETE',
     });
-
+    const result = await response.json();
+    console.log(result);
     // If successful, redirect the browser to the profile page
     if (response.ok) {
       document.location.replace('/profile');
@@ -47,9 +49,10 @@ const delButtonHandler = async (event) => {
       // Display an alert with a failure message
       alert('Failed to delete blog');
     }
+    
   }
 };
 
 // Adding event listeners to the form submission and delete button click
-  document.querySelector('.new-blog-form').addEventListener('submit', newFormHandler);
-  document.querySelector('.blog-list').addEventListener('click', delButtonHandler);
+document.querySelector('.new-blog-form').addEventListener('submit', newFormHandler);
+document.querySelector('.blog-list').addEventListener('click', delButtonHandler);
