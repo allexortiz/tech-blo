@@ -1,6 +1,6 @@
 // Importing the Express Router and required models and middleware
 const router = require('express').Router();
-const { Post, User } = require('../models');
+const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 // Route to render the homepage with a list of blogs
