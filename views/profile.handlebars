@@ -34,6 +34,8 @@
             </div>
             <div class="col-md-4">
                 <button class="btn btn-sm btn-danger" data-id="{{post.id}}">DELETE</button>
+                <!-- Change to hyperlink for the EDIT button -->
+                <a href="/post/edit/{{post.id}}" class="btn btn-sm btn-primary">EDIT</a>
             </div>
         </div>
         {{/each}}

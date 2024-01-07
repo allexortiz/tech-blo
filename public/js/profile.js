@@ -53,6 +53,39 @@ const delButtonHandler = async (event) => {
   }
 };
 
+const editFormHandler = async (event) => {
+  event.preventDefault();
+
+  // Collect values from the edit form
+  const name = document.querySelector('#blog-name').value.trim();
+  const description = document.querySelector('#blog-desc').value.trim();
+  const postId = document.querySelector('#current-post').getAttribute('data-id');
+
+  // Check if name and description are provided
+  if (name && description) {
+    // Send a PUT request to the API endpoint for editing the post
+    const response = await fetch(`/api/posts/${postId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ title: name, description }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // If successful, redirect the browser to the updated post
+    if (response.ok) {
+      console.log('Blog post edited successfully!');
+      document.location.replace(`/post/${postId}`);
+    } else {
+      // Display an alert with a failure message
+      alert('Failed to edit blog post');
+    }
+  }
+};
+
 // Adding event listeners to the form submission and delete button click
 document.querySelector('.new-blog-form').addEventListener('submit', newFormHandler);
+// Adding an event listener to the edit form
 document.querySelector('.blog-list').addEventListener('click', delButtonHandler);
+// Adding an event listener to the edit form
+document.querySelector('.edit-blog-form').addEventListener('submit', editFormHandler);

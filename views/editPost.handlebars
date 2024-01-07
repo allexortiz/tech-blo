@@ -1,0 +1,20 @@
+<div class="container">
+    <h2>Edit Post</h2>
+
+    <form class="form edit-blog-form" method="POST">
+        <div class="form-group">
+            <label for="blog-name">Blog Name:</label>
+            <input class="form-input" type="text" id="blog-name" name="blog-name" value="{{title}}" />
+        </div>
+        <div class="form-group">
+            <label for="blog-desc">Description:</label>
+            <textarea class="form-input" id="blog-desc" name="blog-desc">{{description}}</textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+
+    <a href="/profile">Back to Profile</a>
+
+    <script src="./js/profile.js"></script>
