@@ -1,25 +1,24 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const User = require('./User');
+const Post = require('./Post');
 
 // Comment model definition
 class Comment extends Model {}
 
 Comment.init(
   {
-    // Comment ID (auto-incrementing integer)
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    // Comment text (string with a minimum length of 3 characters)
-    comment_text: {
+    content: {
       type: DataTypes.STRING,
       validate: {
         len: [3]
       }
     },
-    // User ID associated with the comment (foreign key referencing user table)
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -28,7 +27,6 @@ Comment.init(
         key: 'id'
       }
     },
-    // Post ID associated with the comment (foreign key referencing post table)
     post_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -45,5 +43,17 @@ Comment.init(
     modelName: 'comment'
   }
 );
+
+// Associate Comment with User
+Comment.belongsTo(User, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE', // or 'SET NULL' depending on your use case
+});
+
+// Associate Comment with Post
+Comment.belongsTo(Post, {
+  foreignKey: 'post_id',
+  onDelete: 'CASCADE', // or 'SET NULL' depending on your use case
+});
 
 module.exports = Comment;

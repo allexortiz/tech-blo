@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, User } = require('../../models');
+const { Post, User, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // Route to create a new post (requires authentication)
@@ -90,6 +90,23 @@ router.delete('/:id', withAuth, async (req, res) => {
     res.status(200).json(postData);
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+// Route to create a new comment on a post (requires authentication)
+router.post('/:id/comment', withAuth, async (req, res) => {
+  try {
+      if (req.session) {
+          const dbCommentData = await Comment.create({
+              comment_text: req.body.comment_text,
+              post_id: req.params.id,
+              user_id: req.session.user_id,
+          });
+          res.status(201).json({ status: 'success', data: { comment: dbCommentData } });
+      }
+  } catch (err) {
+      console.error(err);
+      res.status(400).json({ status: 'error', message: 'Failed to create comment' });
   }
 });
 
