@@ -4,6 +4,7 @@ const editFormHandler = async (event) => {
     const name = document.querySelector('#blog-name').value.trim();
     const description = document.querySelector('#blog-desc').value.trim();
     const postId = document.querySelector('#current-post').getAttribute('data-id');
+    console.log(postId);
   
     if (name && description) {
       const response = await fetch(`/api/posts/${postId}`, {

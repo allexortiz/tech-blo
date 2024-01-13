@@ -97,5 +97,33 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/edit/:id', withAuth, async (req, res) => {
+  try {
+    console.log(`Edit route reached for post ID: ${req.params.id}`);
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
+
+    if (!postData) {
+      res.status(404).json({ message: 'No post found with this id!' });
+      return;
+    }
+
+    const post = postData.get({ plain: true });
+
+    res.render('editPost', {
+      ...post,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Export the router for use in other modules
 module.exports = router;

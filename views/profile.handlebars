@@ -4,8 +4,19 @@
     <!-- Section to create a new post -->
     <div class="new-blog-section">
         <h3>Post a New Blog!</h3>
+
         <form class="form new-blog-form">
-            <!-- ... (existing form fields for creating a new post) ... -->
+            <div class="form-group">
+                <label for="blog-name">Blog Name:</label>
+                <input class="form-input" type="text" id="blog-name" name="blog-name" />
+            </div>
+            <div class="form-group">
+                <label for="blog-desc">Description:</label>
+                <textarea class="form-input" id="blog-desc" name="blog-desc"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
         </form>
     </div>
 
@@ -14,36 +25,43 @@
     <div class="existing-blogs-section">
         <h3>Current Blogs:</h3>
         {{#each posts as |post|}}
-        <div class="blog">
-            <h4><a href="/post/{{post.id}}">{{post.title}}</a></h4>
-            <p>{{post.description}}</p>
+        <div class="row mb-2">
+            <div class="col-md-8">
+                <h4><a href="/post/{{post.id}}">{{post.title}}</a></h4>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-sm btn-dange blog-list" data-id="{{post.id}}">DELETE</button>
+                <a href="/edit/{{post.id}}" class="btn btn-sm btn-primary">EDIT</a>
+                <div class="blog">
+                    <h4><a href="/post/{{post.id}}">{{post.title}}</a></h4>
+                    <p>{{post.description}}</p>
 
-            <!-- Comments Section -->
-            <div class="comments-section">
-                <h5>Comments</h5>
-                {{#each post.Comments as |comment|}}
-                <div class="comment">
-                    <p>{{comment.comment_text}}</p>
-                    <p>Comment by: {{comment.User.username}}</p>
-                    <!-- Add additional information or styling as needed -->
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <h5>Comments</h5>
+                        {{#each post.Comments as |comment|}}
+                        <div class="comment">
+                            <p>{{comment.comment_text}}</p>
+                            <p>Comment by: {{comment.User.username}}</p>
+                        </div>
+                        {{/each}}
+
+                        <!-- Form for adding a new comment -->
+                        <form class="form new-comment-form" method="POST" action="/api/posts/{{post.id}}/comment">
+                            <div class="form-group">
+                                <label for="comment-text">Add a Comment:</label>
+                                <textarea class="form-input" id="comment-text" name="comment_text"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 {{/each}}
-
-                <!-- Form for adding a new comment -->
-                <form class="form new-comment-form" method="POST" action="/api/posts/{{post.id}}/comment">
-                    <div class="form-group">
-                        <label for="comment-text">Add a Comment:</label>
-                        <textarea class="form-input" id="comment-text" name="comment_text"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Add Comment</button>
-                    </div>
-                </form>
             </div>
+            {{/if}}
         </div>
-        {{/each}}
-    </div>
-    {{/if}}
-</div>
 
-<script src="./js/profile.js"></script>
+        <script src="./js/profile.js"></script>
+        <script src="./js/editPost.js"></script>
